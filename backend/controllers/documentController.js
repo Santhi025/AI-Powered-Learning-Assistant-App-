@@ -32,11 +32,10 @@ export const uploadDocument = async (req, res, next) => {
         }
 
         //Construct the URL for the uploaded file
-        const baseUrl = process.env.BACKEND_URL;
-        const fileUrl = `${baseUrl}/uploads/documents/${req.file.filename}`;
         // const baseUrl = `http://localhost:${process.env.PORT || 8000}`;
         // const fileUrl = `${baseUrl}/uploads/documents/${req.file.filename}`;
 
+        const fileUrl = `/uploads/documents/${req.file.filename}`;
         //Create document record
         const document = await Document.create(
             {
@@ -61,7 +60,8 @@ export const uploadDocument = async (req, res, next) => {
     } catch (error) {
         //Clean up file on error
         if(req.file){
-            await fs.unlink(req.file.path).catch(() => {});
+            // await fs.unlink(req.file.path).catch(() => {});
+            await fs.unlink(`.${document.filePath}`).catch(() => {});
         }
         next(error);
         }

@@ -36,18 +36,35 @@ const DocumentDetailPage = () => {
   }, [id]);
 
   // Helper function to get the full PDF URL
-  const getPdfUrl = () => {
-    if (!document?.data?.filePath) return null;
+  // const getPdfUrl = () => {
+  //   if (!document?.data?.filePath) return null;
 
-    const filePath = document.data.filePath;
+  //   const filePath = document.data.filePath;
 
-    if(filePath.startsWith('http://') || filePath.startsWith('https://')) {
-      return filePath;
-    }
-    const baseUrl=process.env.REACT_APP_BASE_URL || BASE_URL;
+  //   if(filePath.startsWith('http://') || filePath.startsWith('https://')) {
+  //     return filePath;
+  //   }
+  //   const baseUrl=BASE_URL;
 
-    return `${baseUrl}/${filePath.startsWith('/') ? '':'/'}${filePath}`;
+  //   return `${baseUrl}/${filePath.startsWith('/') ? '':'/'}${filePath}`;
     
+  // };
+
+  const getPdfUrl = () => {
+      if (!document?.data?.filePath) return null;
+
+      const filePath = document.data.filePath;
+
+      if (
+        filePath.startsWith("http://") ||
+        filePath.startsWith("https://")
+      ) {
+        return filePath;
+      }
+      // console.log("filePath =", document?.data?.filePath);
+      // console.log("BASE_URL =", BASE_URL);
+      // console.log("pdfUrl =", getPdfUrl());
+      return `${BASE_URL}${filePath}`;
   };
   const renderContent = () =>{
     if(loading){
