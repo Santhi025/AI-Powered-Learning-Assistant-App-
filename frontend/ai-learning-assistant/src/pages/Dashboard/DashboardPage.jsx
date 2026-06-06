@@ -12,8 +12,6 @@ const DashboardPage = () => {
     const fetchDashboardData = async () => {
       try {
         const data= await progressService.getDashboardData();
-        console.log("Data___ getDashboardData",data);
-
         setDashboardData(data);
       } catch (error) {
         toast.error('Failed to fetch dashboard data');
@@ -110,24 +108,17 @@ const DashboardPage = () => {
             </div>
             <h3 className="text-xl font-medium text-slate-900 tracking-tight">Recent Activity</h3>
           </div>
-          {dashboardData.data.recentActivity && (dashboardData.data.recentActivity.length > 0 || dashboardData.data.recentActivity.quizzes.length > 0 )?(
+          {dashboardData.data.recentActivity?.documents?.length > 0?(
             <div className="space-y-3">
-              {[
-                ...(dashboardData.data.recentActivity.documents || []).map(doc => ({
-                  id: doc._id,
-                  description: doc.title,
-                  timestamp: doc.lastAccessed,
-                  link: `/documents/${doc._id}`,
-                  type: 'document'
-                })),
-                ...(dashboardData.data.recentActivity.quizzes || []).map(quiz => ({
-                  id: quiz._id,
-                  description: quiz.title,
-                  timestamp: quiz.lastAttempted,
-                  link: `/quizzes/${quiz._id}`,
-                  type: 'quiz'
-                }))
-              ]
+              {
+              (dashboardData.data.recentActivity.documents || [])
+              .map(doc => ({
+                id: doc._id,
+                description: doc.title,
+                timestamp: doc.lastAccessed,
+                link: `/documents/${doc._id}`,
+                type: 'document'
+              }))
               .sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp))
               .map((activity, index) => (
                 <div
@@ -135,13 +126,9 @@ const DashboardPage = () => {
                 className="group flex items-center justify-between p-4 rounded-xl bg-slate-50/50 border border-slate-200/60 hover:bg-white hover:border-slate-300/60 hover:shadow-md transition-all duration-200">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <div className = {`w-2 h-2 rounded-full ${
-                        activity.type === 'document' ? 
-                        'bg-linear-to-r from-blue-400 to-cyan-500'
-                        :'bg-linear-to-r from-emerald-400 to-teal-500'
-                      }`} />
+                      <div className="w-2 h-2 rounded-full bg-blue-500" />
                       <p className="text-sm font-medium text-slate-900 truncate" >
-                        {activity.type === 'document' ?'Accessed Document:' : 'Attempted Quiz: '}
+                        {activity.type === 'Accessed Document:'}
                         <span className="text-slate-700">{activity.description}</span>
                       </p>
                       </div>

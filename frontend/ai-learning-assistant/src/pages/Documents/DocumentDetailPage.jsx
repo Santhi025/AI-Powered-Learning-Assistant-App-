@@ -11,6 +11,7 @@ import AIActions from '../../components/ai/AIActions';
 import FlashcardManager from '../../components/flashcards/FlashcardManager';
 import Flashcard from '../../components/flashcards/Flashcard';
 import QuizManager from '../../components/quizzes/QuizManager';
+import { BASE_URL } from '../../utils/apiPaths';
 const DocumentDetailPage = () => {
 
   const { id } = useParams();
@@ -43,7 +44,7 @@ const DocumentDetailPage = () => {
     if(filePath.startsWith('http://') || filePath.startsWith('https://')) {
       return filePath;
     }
-    const baseUrl=process.env.REACT_APP_BASE_URL || 'http://localhost:8000';
+    const baseUrl=process.env.REACT_APP_BASE_URL || BASE_URL;
 
     return `${baseUrl}/${filePath.startsWith('/') ? '':'/'}${filePath}`;
     
