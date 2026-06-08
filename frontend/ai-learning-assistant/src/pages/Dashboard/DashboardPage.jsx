@@ -3,6 +3,7 @@ import Spinner from '../../components/common/Spinner';
 import progressService from '../../services/progressService';
 import toast from 'react-hot-toast';
 import { FileText, BookOpen, BrainCircuit, TrendingUp, Clock} from 'lucide-react';
+import { Link } from "react-router-dom";
 const DashboardPage = () => {
 
   const [dashboardData, setDashboardData] = useState(null);
@@ -128,7 +129,8 @@ const DashboardPage = () => {
                     <div className="flex items-center gap-2 mb-1">
                       <div className="w-2 h-2 rounded-full bg-blue-500" />
                       <p className="text-sm font-medium text-slate-900 truncate" >
-                        {activity.type === 'Accessed Document:'}
+                        {/* {activity.type === 'Accessed Document:'} */}
+                        Accessed Document:
                         <span className="text-slate-700">{activity.description}</span>
                       </p>
                       </div>
@@ -136,13 +138,21 @@ const DashboardPage = () => {
                         {new Date(activity.timestamp).toLocaleString()}
                       </p>
                       </div>
-                      {activity.link && (
+                      {/* {activity.link && (
                         <a
                         href={activity.link}
                         className="ml-4 px-4 py-2 text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg transition-all duration-200 whitespace-nowrap"
                         >
                           View
                         </a>
+                      )} */}
+                      {activity.link && (
+                        <Link
+                          to={activity.link}
+                          className="ml-4 px-4 py-2 text-xs font-semibold text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg transition-all duration-200 whitespace-nowrap"
+                        >
+                          View
+                        </Link>
                       )}
                       </div>
               ))}
